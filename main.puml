@@ -45,7 +45,6 @@ class Business {
     -id: String
     -name: String
     -products: Product[]
-    -owner: Owner
     -users: User[]
     +getName(): String
     #setName(): void
