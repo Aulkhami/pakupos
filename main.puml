@@ -3,29 +3,67 @@
 skinparam classAttributeIconSize 0
 
 class Transaction {
-    products: Product[]
-    addProduct(Product product): void
-    calculateTotal(): int
+    -id: String
+    -products: ProductTransaction[]
+    -productCount: int
+    << create >> +Transaction()
+    +addProduct(product: Product): void
+    +addProduct(product: Product, quantity: int): void
+    +removeProduct(index: int): void
+    +calculateTotal(): int
 }
 
 class Product {
+    -id: String
     -name: String
     -price: int
     << create >> +Product(name: String, price: int)
     +getName(): String
+    +setName(): void
     +getPrice(): int
+    +setPrice(): void
 }
 
 class ProductTransaction {
+    -product: Product
     -quantity: int
     -discount: int
+    << create >> +ProductTransaction(product: Product)
+    << create >> +ProductTransaction(product: Product, quantity: int)
+    +getProductName(): String
+    +getProductPrice(): int
     +getQuantity(): int
     +setQuantity(): void
     +getDiscount(): int
     +setDiscount(): void
     +getTotalPrice(): int
 }
-Product <|-- ProductTransaction
-Transaction -- ProductTransaction
+Product <-- ProductTransaction
+Transaction *-- ProductTransaction
+
+class Business {
+    -id: String
+    -name: String
+    -products: Product[]
+    -owner: Owner
+    -users: User[]
+    +getName(): String
+    #setName(): void
+    #addProduct(product: Product): void
+    #removeProduct(product: Product): void
+    #addUser(user: User): void
+    #removeUser(user: User): void
+}
+Business o-- Product
+
+class User {
+    -id: String
+    -name: String
+    -email: String
+    -business: Business
+    +getName(): String
+    +setName(): String
+}
+Business *-- User
 
 @enduml
