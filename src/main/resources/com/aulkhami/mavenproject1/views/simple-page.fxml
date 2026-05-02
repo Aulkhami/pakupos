@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.aulkhami.mavenproject1.views.SimplePageController"
+            fx:id="rootPane"
+            style="-fx-background-color: #f5f7fa;">
+    <top>
+        <VBox alignment="CENTER_LEFT" spacing="4">
+            <padding>
+                <Insets top="16" right="20" bottom="12" left="20"/>
+            </padding>
+            <children>
+                <Label text="Simple Page" style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+                <Label text="One page plus one reusable component in views folder."/>
+            </children>
+        </VBox>
+    </top>
+    <center>
+        <VBox alignment="CENTER" spacing="16">
+            <padding>
+                <Insets top="12" right="20" bottom="12" left="20"/>
+            </padding>
+            <children>
+                <fx:include source="components/simple-card.fxml" fx:id="simpleCard"/>
+                <Button text="Back to Primary" onAction="#backToPrimary"/>
+            </children>
+        </VBox>
+    </center>
+</BorderPane>
