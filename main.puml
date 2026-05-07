@@ -54,7 +54,7 @@ package transaction {
 
     class BankTransfer {
         -bank: String
-        << create >> ~BankTransfer()
+        << create >> ~BankTransfer(transaction: Transaction, amount: int, bank: String)
         +generateVirtualAccount(): String
         +processPayment(): boolean
     }
