@@ -1,0 +1,15 @@
+@startuml
+autonumber
+actor User
+User -> View : click "new transaction"
+View -> ViewModel : call create Transaction
+ViewModel -> Model : initialize Transaction object
+Model -> ViewModel : return Transaction data
+ViewModel -> View : display Transaction
+
+User -> View : add Product to Transaction
+View -> ViewModel : call addProduct
+ViewModel -> Model : intialize ProductTransaction object
+Model -> ViewModel : add ProductTransaction to Transaction
+ViewModel -> View : display updated Transaction
+@enduml
