@@ -20,8 +20,8 @@ package transaction {
         -product: Product
         -quantity: int
         -discount: int
-        << create >> +ProductTransaction(product: Product)
-        << create >> +ProductTransaction(product: Product, quantity: int)
+        << create >> ~ProductTransaction(product: Product)
+        << create >> ~ProductTransaction(product: Product, quantity: int)
         +getProductName(): String
         +getProductPrice(): int
         +getQuantity(): int
@@ -92,6 +92,7 @@ class User {
     -name: String
     -email: String
     -business: Business
+    << create >> +User(id: String, name: String, email: String, business: Business)
     +getName(): String
     +setName(): String
 }
