@@ -1,15 +1,15 @@
-module com.aulkhami.mavenproject1 {
+module com.aulkhami.pakupos {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
 
-    opens com.aulkhami.mavenproject1 to javafx.fxml;
-    opens com.aulkhami.mavenproject1.controllers to javafx.fxml;
-    opens com.aulkhami.mavenproject1.models.entities to javafx.fxml;
-    opens com.aulkhami.mavenproject1.views to javafx.fxml;
-    opens com.aulkhami.mavenproject1.views.components to javafx.fxml;
+    opens com.aulkhami.pakupos to javafx.fxml;
+    opens com.aulkhami.pakupos.controllers to javafx.fxml;
+    opens com.aulkhami.pakupos.models.entities to javafx.fxml;
+    opens com.aulkhami.pakupos.views to javafx.fxml;
+    opens com.aulkhami.pakupos.views.components to javafx.fxml;
 
-    exports com.aulkhami.mavenproject1;
-    exports com.aulkhami.mavenproject1.controllers;
-    exports com.aulkhami.mavenproject1.models.entities;
+    exports com.aulkhami.pakupos;
+    exports com.aulkhami.pakupos.controllers;
+    exports com.aulkhami.pakupos.models.entities;
 }

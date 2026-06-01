@@ -3,8 +3,8 @@
 JavaFX + Maven desktop application boilerplate with layered structure (view, service, DAO, database).
 
 ## Current status
-- JavaFX app entrypoint is `com.aulkhami.mavenproject1.App`
-- FXML views are under `src/main/resources/com/aulkhami/mavenproject1`
+- JavaFX app entrypoint is `com.aulkhami.pakupos.App`
+- FXML views are under `src/main/resources/com/aulkhami/pakupos`
 - Core boilerplate exists for:
   - config (`AppConfig`, `DatabaseConfig`, `Constants`)
   - utils (`AlertHelper`, `ValidationUtil`, `PasswordUtil`, `ConfigLoader`)
@@ -82,7 +82,7 @@ javafx-project/
 │   │   │               │       ├── CustomTextField.java
 │   │   │               │       └── LoadingSpinner.java
 │   │   │               │
-│   │   │               ├── 
+│   │   │               ├──
 /
 │   │   │               │   ├── DatabaseException.java
 │   │   │               │   ├── ValidationException.java

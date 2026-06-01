@@ -11,7 +11,7 @@ The project follows layered architecture:
 - Database: JDBC connections + configuration
 
 Main package:
-- `com.aulkhami.mavenproject1`
+- `com.aulkhami.pakupos`
 
 ## 2. Key paths
 
