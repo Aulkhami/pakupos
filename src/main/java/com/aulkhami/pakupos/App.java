@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import com.aulkhami.pakupos.controllers.LoginController;
+
 /**
  * JavaFX App
  */
@@ -17,7 +19,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 640, 480);
+        LoginController login = new LoginController();
+        scene = new Scene(login.getView());
         stage.setScene(scene);
         stage.show();
     }
