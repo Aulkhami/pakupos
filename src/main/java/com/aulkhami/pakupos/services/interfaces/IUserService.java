@@ -1,20 +1,26 @@
 package com.aulkhami.pakupos.services.interfaces;
 
+import com.aulkhami.pakupos.enums.UserRole;
 import com.aulkhami.pakupos.models.entities.User;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface IUserService {
-    User registerUser(String username, String email, String password);
 
-    Optional<User> loginUser(String username, String password);
+    public User registerUser(String name,
+            String email,
+            String plainPassword,
+            String phone,
+            UserRole role);
 
-    List<User> getAllUsers();
+    public Optional<User> loginUser(String email, String password);
 
-    Optional<User> getUserById(Integer id);
+    public List<User> getAllUsers();
 
-    void updateUser(User user);
+    public Optional<User> getUserById(Integer id);
 
-    void deleteUser(Integer id);
+    public void updateUser(User user);
+
+    public void deleteUser(Integer id);
 }
