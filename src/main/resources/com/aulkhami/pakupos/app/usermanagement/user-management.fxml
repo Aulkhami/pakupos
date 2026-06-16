@@ -6,8 +6,8 @@
 <?import javafx.scene.text.Font?>
 
 <VBox spacing="0.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.aulkhami.pakupos.controllers.UserManagementController"
-      styleClass="mobile-root" stylesheets="@css/main.css">
+      fx:controller="com.aulkhami.pakupos.app.usermanagement.UserManagementView"
+      styleClass="mobile-root" stylesheets="@../../css/main.css">
 
     <!-- Header -->
     <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="mobile-header">

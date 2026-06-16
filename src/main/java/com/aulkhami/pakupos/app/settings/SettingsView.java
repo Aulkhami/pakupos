@@ -1,16 +1,21 @@
-package com.aulkhami.pakupos.controllers;
+package com.aulkhami.pakupos.app.settings;
 
 import com.aulkhami.pakupos.App;
 import com.aulkhami.pakupos.enums.UserRole;
+import com.aulkhami.pakupos.interactors.Interactor;
+import com.aulkhami.pakupos.models.Model;
 import com.aulkhami.pakupos.models.entities.User;
 import com.aulkhami.pakupos.utils.AlertHelper;
-import com.aulkhami.pakupos.utils.SessionManager;
+import com.aulkhami.pakupos.views.View;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-public class SettingsController extends BaseController {
+public class SettingsView implements View {
+
+    private SettingsModel model;
+    private SettingsInteractor interactor;
 
     @FXML
     private Label nameLabel;
@@ -28,8 +33,23 @@ public class SettingsController extends BaseController {
     private VBox adminSection;
 
     @Override
-    public void initialize() {
-        User currentUser = SessionManager.getCurrentUser();
+    public void setModel(Model model) {
+        this.model = (SettingsModel) model;
+
+        this.model.currentUserProperty().addListener((obs, oldUser, newUser) -> {
+            updateUI(newUser);
+        });
+
+        updateUI(this.model.getCurrentUser());
+    }
+
+    @Override
+    public void setInteractor(Interactor interactor) {
+        this.interactor = (SettingsInteractor) interactor;
+        this.interactor.loadSessionData();
+    }
+
+    private void updateUI(User currentUser) {
         if (currentUser != null) {
             nameLabel.setText(currentUser.getName());
             roleLabel.setText(currentUser.getRole().getLabel());
@@ -60,7 +80,7 @@ public class SettingsController extends BaseController {
     @FXML
     private void handleUserManagement() {
         try {
-            App.setRoot("user-management");
+            App.navigate("user-management");
         } catch (IOException e) {
             AlertHelper.showError(
                 "System Error",
@@ -72,9 +92,9 @@ public class SettingsController extends BaseController {
 
     @FXML
     private void handleLogout() {
-        SessionManager.logout();
+        interactor.logout();
         try {
-            App.setRoot("login");
+            App.navigate("login");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -83,7 +103,7 @@ public class SettingsController extends BaseController {
     @FXML
     private void handleBack() {
         try {
-            App.setRoot("dashboard");
+            App.navigate("dashboard");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -92,7 +112,7 @@ public class SettingsController extends BaseController {
     @FXML
     private void handleNewSale() {
         try {
-            App.setRoot("pos");
+            App.navigate("pos");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -101,7 +121,7 @@ public class SettingsController extends BaseController {
     @FXML
     private void handleInventory() {
         try {
-            App.setRoot("inventory");
+            App.navigate("inventory");
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -24,9 +24,14 @@ public class DashboardView implements View {
     }
 
     @FXML
+    public void initialize() {
+        // Initialize dashboard state if needed
+    }
+
+    @FXML
     private void handleNewSale() {
         try {
-            com.aulkhami.pakupos.App.setRoot("pos");
+            App.navigate("pos");
         } catch (IOException e) {
             AlertHelper.showError("System Error", "Could not load POS screen.");
             e.printStackTrace();
@@ -39,8 +44,8 @@ public class DashboardView implements View {
             App.navigate("inventory");
         } catch (IOException e) {
             AlertHelper.showError(
-                    "System Error",
-                    "Could not load Inventory screen."
+                "System Error",
+                "Could not load Inventory screen."
             );
             e.printStackTrace();
         }
@@ -49,11 +54,11 @@ public class DashboardView implements View {
     @FXML
     private void handleReports() {
         try {
-            App.setRoot("report");
+            App.navigate("report");
         } catch (IOException e) {
             AlertHelper.showError(
-                    "System Error",
-                    "Could not load Reports screen."
+                "System Error",
+                "Could not load Reports screen."
             );
             e.printStackTrace();
         }
@@ -62,11 +67,11 @@ public class DashboardView implements View {
     @FXML
     private void handleSettings() {
         try {
-            App.setRoot("settings");
+            App.navigate("settings");
         } catch (IOException e) {
             AlertHelper.showError(
-                    "System Error",
-                    "Could not load Settings screen."
+                "System Error",
+                "Could not load Settings screen."
             );
             e.printStackTrace();
         }
@@ -75,7 +80,7 @@ public class DashboardView implements View {
     @FXML
     private void handleLogout() {
         try {
-            com.aulkhami.pakupos.App.setRoot("login");
+            App.navigate("login");
         } catch (IOException e) {
             e.printStackTrace();
         }

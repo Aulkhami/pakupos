@@ -132,7 +132,7 @@ public class InventoryView implements View {
     @FXML
     private void handleNewSale() {
         try {
-            App.setRoot("pos");
+            App.navigate("pos");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -141,7 +141,7 @@ public class InventoryView implements View {
     @FXML
     private void handleSettings() {
         try {
-            App.setRoot("settings");
+            App.navigate("settings");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -150,7 +150,7 @@ public class InventoryView implements View {
     @FXML
     private void handleBack() {
         try {
-            App.setRoot("dashboard");
+            App.navigate("dashboard");
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,8 +1,13 @@
 package com.aulkhami.pakupos;
 
 import com.aulkhami.pakupos.app.dashboard.DashboardController;
-import com.aulkhami.pakupos.app.inventory.InventoryController;
 import com.aulkhami.pakupos.app.login.LoginController;
+import com.aulkhami.pakupos.app.inventory.InventoryController;
+import com.aulkhami.pakupos.app.pos.POSController;
+import com.aulkhami.pakupos.app.report.ReportController;
+import com.aulkhami.pakupos.app.settings.SettingsController;
+import com.aulkhami.pakupos.app.usermanagement.UserManagementController;
+
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -48,6 +53,10 @@ public class App extends Application {
 
     public static void navigate(String page) throws IOException {
         switch (page) {
+            case "login":
+                LoginController login = new LoginController();
+                scene.setRoot(login.getView());
+                break;
             case "dashboard":
                 DashboardController dashboard = new DashboardController();
                 scene.setRoot(dashboard.getView());
@@ -56,8 +65,24 @@ public class App extends Application {
                 InventoryController inventory = new InventoryController();
                 scene.setRoot(inventory.getView());
                 break;
+            case "pos":
+                POSController pos = new POSController();
+                scene.setRoot(pos.getView());
+                break;
+            case "report":
+                ReportController report = new ReportController();
+                scene.setRoot(report.getView());
+                break;
+            case "settings":
+                SettingsController settings = new SettingsController();
+                scene.setRoot(settings.getView());
+                break;
+            case "user-management":
+                UserManagementController userManagement = new UserManagementController();
+                scene.setRoot(userManagement.getView());
+                break;
             default:
-                throw new AssertionError();
+                throw new AssertionError("Unknown page: " + page);
         }
     }
 

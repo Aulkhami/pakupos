@@ -1,12 +1,14 @@
-package com.aulkhami.pakupos.controllers;
+package com.aulkhami.pakupos.app.report;
 
 import com.aulkhami.pakupos.App;
-import com.aulkhami.pakupos.dao.OrderDAO;
+import com.aulkhami.pakupos.interactors.Interactor;
+import com.aulkhami.pakupos.models.Model;
 import com.aulkhami.pakupos.models.entities.Order;
+import com.aulkhami.pakupos.views.View;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.Locale;
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -16,37 +18,54 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-public class ReportController extends BaseController {
+public class ReportView implements View {
+
+    private ReportModel model;
+    private ReportInteractor interactor;
 
     @FXML
     private Label totalSalesLabel;
+
     @FXML
     private Label totalOrdersLabel;
+
     @FXML
     private VBox transactionListVBox;
 
-    private final OrderDAO orderDAO = new OrderDAO();
     private final NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
 
     @Override
-    public void initialize() {
-        loadSummary();
-        loadTransactions();
-    }
+    public void setModel(Model model) {
+        this.model = (ReportModel) model;
 
-    private void loadSummary() {
-        BigDecimal totalSales = orderDAO.getTotalSalesToday();
-        int totalOrders = orderDAO.getOrderCountToday();
-
-        totalSalesLabel.setText(currencyFormat.format(totalSales).replace("Rp", "Rp "));
-        totalOrdersLabel.setText(String.valueOf(totalOrders));
-    }
-
-    private void loadTransactions() {
-        transactionListVBox.getChildren().clear();
-        orderDAO.findAll().forEach(order -> {
-            transactionListVBox.getChildren().add(createTransactionItem(order));
+        // Bind/listen to changes
+        this.model.totalSalesProperty().addListener((obs, oldVal, newVal) -> {
+            totalSalesLabel.setText(currencyFormat.format(newVal).replace("Rp", "Rp "));
         });
+        this.model.totalOrdersProperty().addListener((obs, oldVal, newVal) -> {
+            totalOrdersLabel.setText(String.valueOf(newVal));
+        });
+        this.model.getTransactions().addListener((ListChangeListener<Order>) change -> {
+            renderTransactions();
+        });
+
+        // Set initial values
+        totalSalesLabel.setText(currencyFormat.format(this.model.getTotalSales()).replace("Rp", "Rp "));
+        totalOrdersLabel.setText(String.valueOf(this.model.getTotalOrders()));
+        renderTransactions();
+    }
+
+    @Override
+    public void setInteractor(Interactor interactor) {
+        this.interactor = (ReportInteractor) interactor;
+        this.interactor.loadReportData();
+    }
+
+    private void renderTransactions() {
+        transactionListVBox.getChildren().clear();
+        for (Order order : model.getTransactions()) {
+            transactionListVBox.getChildren().add(createTransactionItem(order));
+        }
     }
 
     private Node createTransactionItem(Order order) {
@@ -78,7 +97,7 @@ public class ReportController extends BaseController {
     @FXML
     private void handleBack() {
         try {
-            App.setRoot("dashboard");
+            App.navigate("dashboard");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -87,7 +106,7 @@ public class ReportController extends BaseController {
     @FXML
     private void handleNewSale() {
         try {
-            App.setRoot("pos");
+            App.navigate("pos");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -96,7 +115,7 @@ public class ReportController extends BaseController {
     @FXML
     private void handleInventory() {
         try {
-            App.setRoot("inventory");
+            App.navigate("inventory");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -105,7 +124,7 @@ public class ReportController extends BaseController {
     @FXML
     private void handleSettings() {
         try {
-            App.setRoot("settings");
+            App.navigate("settings");
         } catch (IOException e) {
             e.printStackTrace();
         }

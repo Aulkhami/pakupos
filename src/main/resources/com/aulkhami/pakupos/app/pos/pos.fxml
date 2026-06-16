@@ -6,9 +6,9 @@
 <StackPane
     xmlns="http://javafx.com/javafx/17"
     xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="com.aulkhami.pakupos.controllers.POSController"
+    fx:controller="com.aulkhami.pakupos.app.pos.POSView"
     styleClass="mobile-root"
-    stylesheets="@css/main.css"
+    stylesheets="@../../css/main.css"
 >
 
     <VBox spacing="0.0">

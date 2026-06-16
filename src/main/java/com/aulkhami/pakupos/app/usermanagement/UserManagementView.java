@@ -1,13 +1,12 @@
-package com.aulkhami.pakupos.controllers;
+package com.aulkhami.pakupos.app.usermanagement;
 
 import com.aulkhami.pakupos.App;
-import com.aulkhami.pakupos.dao.UserDAO;
-import com.aulkhami.pakupos.enums.UserRole;
+import com.aulkhami.pakupos.interactors.Interactor;
+import com.aulkhami.pakupos.models.Model;
 import com.aulkhami.pakupos.models.entities.User;
-import com.aulkhami.pakupos.utils.AlertHelper;
-import com.aulkhami.pakupos.utils.PasswordUtil;
+import com.aulkhami.pakupos.views.View;
 import java.io.IOException;
-import java.util.List;
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -19,30 +18,51 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-public class UserManagementController extends BaseController {
+public class UserManagementView implements View {
+
+    private UserManagementModel model;
+    private UserManagementInteractor interactor;
 
     @FXML
     private TextField nameField;
+
     @FXML
     private TextField emailField;
+
     @FXML
     private PasswordField passwordField;
+
     @FXML
     private TextField phoneField;
+
     @FXML
     private VBox userListVBox;
 
-    private final UserDAO userDAO = new UserDAO();
-
     @Override
-    public void initialize() {
-        loadUsers();
+    public void setModel(Model model) {
+        this.model = (UserManagementModel) model;
+
+        nameField.textProperty().bindBidirectional(this.model.nameProperty());
+        emailField.textProperty().bindBidirectional(this.model.emailProperty());
+        passwordField.textProperty().bindBidirectional(this.model.passwordProperty());
+        phoneField.textProperty().bindBidirectional(this.model.phoneProperty());
+
+        this.model.getUsers().addListener((ListChangeListener<User>) change -> {
+            renderUsers();
+        });
+
+        renderUsers();
     }
 
-    private void loadUsers() {
+    @Override
+    public void setInteractor(Interactor interactor) {
+        this.interactor = (UserManagementInteractor) interactor;
+        this.interactor.loadUsers();
+    }
+
+    private void renderUsers() {
         userListVBox.getChildren().clear();
-        List<User> users = userDAO.findAll();
-        for (User user : users) {
+        for (User user : model.getUsers()) {
             userListVBox.getChildren().add(createUserItem(user));
         }
     }
@@ -74,51 +94,15 @@ public class UserManagementController extends BaseController {
 
     @FXML
     private void handleAddKaryawan() {
-        String name = nameField.getText();
-        String email = emailField.getText();
-        String password = passwordField.getText();
-        String phone = phoneField.getText();
-
-        if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
-            AlertHelper.showError("Validation Error", "Name, Email, and Password are required.");
-            return;
-        }
-
-        try {
-            User newUser = new User();
-            newUser.setName(name);
-            newUser.setEmail(email);
-            // In a real app, use PasswordUtil.hashPassword(password)
-            // For now, keeping it simple as per existing login flow if hash is not yet enforced everywhere
-            newUser.setPassword(password);
-            newUser.setPhone(phone);
-            newUser.setRole(UserRole.KARYAWAN);
-            newUser.setIsActive(true);
-
-            userDAO.save(newUser);
-
-            AlertHelper.showSuccess("Success", "Karyawan added successfully!");
-            clearFields();
-            loadUsers();
-        } catch (Exception e) {
-            AlertHelper.showError("Error", "Could not add user: " + e.getMessage());
-            e.printStackTrace();
-        }
+        interactor.addKaryawan();
     }
 
     @FXML
     private void handleBack() {
         try {
-            App.setRoot("settings");
+            App.navigate("settings");
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private void clearFields() {
-        nameField.clear();
-        emailField.clear();
-        passwordField.clear();
-        phoneField.clear();
     }
 }
