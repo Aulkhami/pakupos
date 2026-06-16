@@ -8,7 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-class LoginView implements View {
+public class LoginView implements View {
 
     private LoginModel model;
     private LoginInteractor interactor;
