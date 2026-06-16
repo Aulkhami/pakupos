@@ -1,6 +1,8 @@
 package com.aulkhami.pakupos;
 
-import com.aulkhami.pakupos.controllers.LoginController;
+import com.aulkhami.pakupos.app.dashboard.DashboardController;
+import com.aulkhami.pakupos.app.inventory.InventoryController;
+import com.aulkhami.pakupos.app.login.LoginController;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +22,7 @@ public class App extends Application {
         LoginController login = new LoginController();
         scene = new Scene(login.getView(), 412, 915);
         stage.setScene(scene);
-        stage.setTitle("Pakupos Mobile");
+        stage.setTitle("PAKU POS");
 
         // Responsive constraints:
         // Min: small phone, Max: large tablet (portrait)
@@ -39,9 +41,24 @@ public class App extends Application {
 
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(
-            App.class.getResource(fxml + ".fxml")
+                App.class.getResource(fxml + ".fxml")
         );
         return fxmlLoader.load();
+    }
+
+    public static void navigate(String page) throws IOException {
+        switch (page) {
+            case "dashboard":
+                DashboardController dashboard = new DashboardController();
+                scene.setRoot(dashboard.getView());
+                break;
+            case "inventory":
+                InventoryController inventory = new InventoryController();
+                scene.setRoot(inventory.getView());
+                break;
+            default:
+                throw new AssertionError();
+        }
     }
 
     public static void main(String[] args) {

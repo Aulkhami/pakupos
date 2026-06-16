@@ -1,9 +1,12 @@
-package com.aulkhami.pakupos.controllers;
+package com.aulkhami.pakupos.app.inventory;
 
 import com.aulkhami.pakupos.App;
 import com.aulkhami.pakupos.dao.ProductDAO;
+import com.aulkhami.pakupos.interactors.Interactor;
+import com.aulkhami.pakupos.models.Model;
 import com.aulkhami.pakupos.models.entities.Product;
 import com.aulkhami.pakupos.utils.AlertHelper;
+import com.aulkhami.pakupos.views.View;
 import java.io.IOException;
 import java.math.BigDecimal;
 import javafx.fxml.FXML;
@@ -16,7 +19,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-public class InventoryController extends BaseController {
+public class InventoryView implements View {
+
+    private InventoryModel model;
+    private InventoryInteractor interactor;
 
     @FXML
     private TextField nameField;
@@ -33,12 +39,17 @@ public class InventoryController extends BaseController {
     @FXML
     private VBox productListVBox;
 
-    private final ProductDAO productDAO = new ProductDAO();
+    @Override
+    public void setModel(Model model) {
+        this.model = (InventoryModel) model;
+    }
 
     @Override
-    public void initialize() {
-        loadProducts();
+    public void setInteractor(Interactor interactor) {
+        this.interactor = (InventoryInteractor) interactor;
     }
+
+    private final ProductDAO productDAO = new ProductDAO();
 
     private void loadProducts() {
         productListVBox.getChildren().clear();
@@ -61,7 +72,7 @@ public class InventoryController extends BaseController {
         nameLabel.setStyle("-fx-font-weight: bold;");
 
         Label catLabel = new Label(
-            product.getCategory() + " • Stock: " + product.getStock()
+                product.getCategory() + " • Stock: " + product.getStock()
         );
         catLabel.setStyle("-fx-font-size: 11px; -fx-text-fill: gray;");
 
@@ -83,8 +94,8 @@ public class InventoryController extends BaseController {
 
         if (name.isEmpty() || priceStr.isEmpty() || stockStr.isEmpty()) {
             AlertHelper.showError(
-                "Validation Error",
-                "Please fill in all required fields."
+                    "Validation Error",
+                    "Please fill in all required fields."
             );
             return;
         }
@@ -106,13 +117,13 @@ public class InventoryController extends BaseController {
             loadProducts(); // Refresh list
         } catch (NumberFormatException e) {
             AlertHelper.showError(
-                "Input Error",
-                "Price and Stock must be valid numbers."
+                    "Input Error",
+                    "Price and Stock must be valid numbers."
             );
         } catch (Exception e) {
             AlertHelper.showError(
-                "Database Error",
-                "Could not save product: " + e.getMessage()
+                    "Database Error",
+                    "Could not save product: " + e.getMessage()
             );
             e.printStackTrace();
         }
