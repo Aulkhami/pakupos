@@ -32,6 +32,20 @@ public class POSInteractor implements Interactor {
         }
     }
 
+    public void searchCatalog(String keyword) {
+        try {
+            List<ProductResponseDTO> products;
+            if (keyword == null || keyword.trim().isEmpty()) {
+                products = posService.getCatalog();
+            } else {
+                products = posService.searchCatalog(keyword.trim());
+            }
+            model.getCatalog().setAll(products);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void addToCart(ProductResponseDTO product) {
         // Check if item already exists in cart
         Optional<CartItemDTO> existingItem = model.getCart().stream()

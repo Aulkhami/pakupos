@@ -24,6 +24,13 @@ public class InventoryService {
                 .collect(Collectors.toList());
     }
 
+    public List<ProductResponseDTO> searchProducts(String keyword) {
+        List<Product> products = productRepository.search(keyword);
+        return products.stream()
+                .map(ProductResponseDTO::new)
+                .collect(Collectors.toList());
+    }
+
     public ProductResponseDTO createProduct(ProductRequestDTO requestDTO) throws IllegalArgumentException {
         // Validation
         if (requestDTO.getName() == null || requestDTO.getName().trim().isEmpty()) {
@@ -36,7 +43,6 @@ public class InventoryService {
             throw new IllegalArgumentException("Stock cannot be negative");
         }
 
-        // Map DTO to Entity
         Product product = new Product();
         product.setName(requestDTO.getName());
         product.setCategory(requestDTO.getCategory());

@@ -29,6 +29,9 @@ public class POSView implements View {
     private FlowPane productFlowPane;
 
     @FXML
+    private TextField searchField;
+
+    @FXML
     private Label itemCountLabel;
 
     @FXML
@@ -55,6 +58,12 @@ public class POSView implements View {
         this.interactor = (POSInteractor) interactor;
         // Load catalog after interactor is set
         this.interactor.loadCatalog();
+
+        if (searchField != null) {
+            searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+                this.interactor.searchCatalog(newValue);
+            });
+        }
     }
 
     private void renderProducts() {

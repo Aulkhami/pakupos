@@ -1,16 +1,26 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.aulkhami.pakupos.modules.dashboard;
 
 import com.aulkhami.pakupos.models.Model;
+import com.aulkhami.pakupos.modules.pos.dtos.OrderResponseDTO;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import java.math.BigDecimal;
 
-/**
- *
- * @author Rakha
- */
 class DashboardModel implements Model {
+    private final SimpleObjectProperty<BigDecimal> totalSales = new SimpleObjectProperty<>(BigDecimal.ZERO);
+    private final SimpleIntegerProperty totalOrders = new SimpleIntegerProperty(0);
+    private final ObservableList<OrderResponseDTO> recentTransactions = FXCollections.observableArrayList();
 
+    public SimpleObjectProperty<BigDecimal> totalSalesProperty() { return totalSales; }
+    public BigDecimal getTotalSales() { return totalSales.get(); }
+    public void setTotalSales(BigDecimal value) { totalSales.set(value); }
+
+    public SimpleIntegerProperty totalOrdersProperty() { return totalOrders; }
+    public int getTotalOrders() { return totalOrders.get(); }
+    public void setTotalOrders(int value) { totalOrders.set(value); }
+
+    public ObservableList<OrderResponseDTO> getRecentTransactions() { return recentTransactions; }
 }
 

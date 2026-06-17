@@ -47,14 +47,14 @@
                         <Insets bottom="15" left="15" right="15" top="15" />
                     </padding>
                     <Label style="-fx-text-fill: white; -fx-font-size: 12px;" text="Total Sales" />
-                    <Label style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;" text="Rp 2.4M" />
+                    <Label fx:id="totalSalesLabel" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;" text="Rp 0" />
                 </VBox>
                 <VBox maxWidth="Infinity" spacing="5.0" styleClass="mobile-stats-card-alt" HBox.hgrow="ALWAYS">
                     <padding>
                         <Insets bottom="15" left="15" right="15" top="15" />
                     </padding>
                     <Label style="-fx-text-fill: white; -fx-font-size: 12px;" text="Orders" />
-                    <Label style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;" text="42" />
+                    <Label fx:id="totalOrdersLabel" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;" text="0" />
                 </VBox>
             </HBox>
 
@@ -82,23 +82,8 @@
 
             <Label styleClass="mobile-subtitle" text="Recent Transactions" />
 
-            <VBox spacing="10.0" styleClass="mobile-recent-list">
-                <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="mobile-recent-item">
-                    <padding><Insets bottom="10" left="15" right="15" top="10" /></padding>
-                    <VBox HBox.hgrow="ALWAYS">
-                        <Label style="-fx-font-weight: bold;" text="Order #ORD-2026-001" />
-                        <Label style="-fx-font-size: 12px; -fx-text-fill: gray;" text="Customer: John Doe" />
-                    </VBox>
-                    <Label style="-fx-text-fill: #198754; -fx-font-weight: bold;" text="Rp 45.000" />
-                </HBox>
-                <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="mobile-recent-item">
-                    <padding><Insets bottom="10" left="15" right="15" top="10" /></padding>
-                    <VBox HBox.hgrow="ALWAYS">
-                        <Label style="-fx-font-weight: bold;" text="Order #ORD-2026-002" />
-                        <Label style="-fx-font-size: 12px; -fx-text-fill: gray;" text="Customer: Jane Smith" />
-                    </VBox>
-                    <Label style="-fx-text-fill: #198754; -fx-font-weight: bold;" text="Rp 120.000" />
-                </HBox>
+            <VBox fx:id="recentTransactionsVBox" spacing="10.0" styleClass="mobile-recent-list">
+                <!-- Transactions will be loaded here dynamically -->
             </VBox>
         </VBox>
     </ScrollPane>

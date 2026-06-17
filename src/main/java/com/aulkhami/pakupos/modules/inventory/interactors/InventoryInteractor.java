@@ -28,6 +28,20 @@ public class InventoryInteractor implements Interactor {
         }
     }
 
+    public void searchProducts(String keyword) {
+        try {
+            List<ProductResponseDTO> products;
+            if (keyword == null || keyword.trim().isEmpty()) {
+                products = inventoryService.getAllProducts();
+            } else {
+                products = inventoryService.searchProducts(keyword.trim());
+            }
+            model.getProducts().setAll(products);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void saveProduct(ProductRequestDTO requestDTO) {
         try {
             inventoryService.createProduct(requestDTO);

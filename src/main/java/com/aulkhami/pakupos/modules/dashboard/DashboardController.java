@@ -20,7 +20,7 @@ public class DashboardController implements Controller {
 
     public DashboardController() {
         model = new DashboardModel();
-        interactor = new DashboardInteractor();
+        interactor = new DashboardInteractor(model);
     }
 
     @Override

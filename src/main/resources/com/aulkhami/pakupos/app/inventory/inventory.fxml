@@ -65,6 +65,7 @@
             <Separator />
 
             <Label styleClass="mobile-subtitle" text="Current Inventory" />
+            <TextField fx:id="searchField" promptText="Search products..." styleClass="mobile-input" />
             <VBox fx:id="productListVBox" spacing="0.0" styleClass="mobile-recent-list">
                 <!-- Products will be loaded here dynamically -->
             </VBox>

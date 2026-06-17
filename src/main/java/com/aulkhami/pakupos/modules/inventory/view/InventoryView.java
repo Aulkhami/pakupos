@@ -40,6 +40,9 @@ public class InventoryView implements View {
     private TextField stockField;
 
     @FXML
+    private TextField searchField;
+
+    @FXML
     private VBox productListVBox;
 
     @Override
@@ -57,6 +60,12 @@ public class InventoryView implements View {
     public void setInteractor(Interactor interactor) {
         this.interactor = (InventoryInteractor) interactor;
         this.interactor.loadProducts();
+
+        if (searchField != null) {
+            searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+                this.interactor.searchProducts(newValue);
+            });
+        }
     }
 
     private void renderProducts() {
