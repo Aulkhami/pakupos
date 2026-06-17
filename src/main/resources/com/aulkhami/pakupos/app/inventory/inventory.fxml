@@ -3,14 +3,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<VBox
-    spacing="0.0"
-    xmlns="http://javafx.com/javafx/17"
-    xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="com.aulkhami.pakupos.controllers.InventoryController"
-    styleClass="mobile-root"
-    stylesheets="@css/main.css"
->
+
+<VBox spacing="0.0" styleClass="mobile-root" stylesheets="@../../css/main.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aulkhami.pakupos.modules.inventory.view.InventoryView">
 
     <!-- Header -->
     <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="mobile-header">
@@ -243,3 +237,4 @@
         </Button>
     </HBox>
 </VBox>
+

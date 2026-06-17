@@ -5,14 +5,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<VBox
-    spacing="0.0"
-    xmlns="http://javafx.com/javafx/17"
-    xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="com.aulkhami.pakupos.controllers.SettingsController"
-    styleClass="mobile-root"
-    stylesheets="@css/main.css"
->
+<VBox spacing="0.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.aulkhami.pakupos.modules.settings.SettingsView"
+      styleClass="mobile-root" stylesheets="@../../css/main.css">
 
     <!-- Header -->
     <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="mobile-header">
@@ -179,3 +174,4 @@
         </Button>
     </HBox>
 </VBox>
+
