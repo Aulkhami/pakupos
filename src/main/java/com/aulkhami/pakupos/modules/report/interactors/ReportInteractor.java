@@ -1,13 +1,13 @@
 package com.aulkhami.pakupos.modules.report.interactors;
 
 import com.aulkhami.pakupos.modules.pos.repositories.OrderRepository;
-import com.aulkhami.pakupos.interactors.Interactor;
+import com.aulkhami.pakupos.interactors.MenuBarInteractor;
 import com.aulkhami.pakupos.modules.pos.entities.Order;
 import com.aulkhami.pakupos.modules.report.models.ReportModel;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class ReportInteractor implements Interactor {
+public class ReportInteractor extends MenuBarInteractor {
     private final ReportModel model;
     private final OrderRepository orderRepository = new OrderRepository();
 

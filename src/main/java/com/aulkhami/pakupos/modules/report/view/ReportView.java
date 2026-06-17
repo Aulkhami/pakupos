@@ -98,38 +98,22 @@ public class ReportView implements View {
 
     @FXML
     private void handleBack() {
-        try {
-            App.navigate("dashboard");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        interactor.navDashboard();
     }
 
     @FXML
     private void handleNewSale() {
-        try {
-            App.navigate("pos");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        interactor.navNewSale();
     }
 
     @FXML
     private void handleInventory() {
-        try {
-            App.navigate("inventory");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        interactor.navInventory();
     }
 
     @FXML
     private void handleSettings() {
-        try {
-            App.navigate("settings");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        interactor.navSettings();
     }
 }
 

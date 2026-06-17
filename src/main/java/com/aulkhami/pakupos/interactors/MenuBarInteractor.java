@@ -14,7 +14,7 @@ import java.io.IOException;
  */
 public abstract class MenuBarInteractor implements Interactor {
 
-    protected void navDashboard() {
+    public void navDashboard() {
         try {
             App.navigate("dashboard");
         } catch (IOException e) {
@@ -22,7 +22,7 @@ public abstract class MenuBarInteractor implements Interactor {
         }
     }
 
-    protected void navNewSale() {
+    public void navNewSale() {
         try {
             App.navigate("pos");
         } catch (IOException e) {
@@ -31,7 +31,7 @@ public abstract class MenuBarInteractor implements Interactor {
         }
     }
 
-    protected void navInventory() {
+    public void navInventory() {
         try {
             App.navigate("inventory");
         } catch (IOException e) {
@@ -43,7 +43,7 @@ public abstract class MenuBarInteractor implements Interactor {
         }
     }
 
-    protected void navSettings() {
+    public void navSettings() {
         try {
             App.navigate("settings");
         } catch (IOException e) {

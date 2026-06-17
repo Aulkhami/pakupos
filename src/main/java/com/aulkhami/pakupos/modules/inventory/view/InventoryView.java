@@ -127,29 +127,17 @@ public class InventoryView implements View {
 
     @FXML
     private void handleNewSale() {
-        try {
-            App.navigate("pos");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        interactor.navNewSale();
     }
 
     @FXML
     private void handleSettings() {
-        try {
-            App.navigate("settings");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        interactor.navSettings();
     }
 
     @FXML
     private void handleBack() {
-        try {
-            App.navigate("dashboard");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        interactor.navDashboard();
     }
 
     private void clearFields() {

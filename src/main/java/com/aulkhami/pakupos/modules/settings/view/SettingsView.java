@@ -104,29 +104,17 @@ public class SettingsView implements View {
 
     @FXML
     private void handleBack() {
-        try {
-            App.navigate("dashboard");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        interactor.navDashboard();
     }
 
     @FXML
     private void handleNewSale() {
-        try {
-            App.navigate("pos");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        interactor.navNewSale();
     }
 
     @FXML
     private void handleInventory() {
-        try {
-            App.navigate("inventory");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        interactor.navInventory();
     }
 }
 
