@@ -9,15 +9,24 @@ import com.aulkhami.pakupos.modules.dashboard.interactors.DashboardInteractor;
 import com.aulkhami.pakupos.views.View;
 import java.io.IOException;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 
 public class DashboardView implements View {
 
     private DashboardModel model;
     private DashboardInteractor interactor;
 
+    @FXML
+    private Label salesAmount;
+    @FXML
+    private Label salesCount;
+
     @Override
     public void setModel(Model model) {
         this.model = (DashboardModel) model;
+
+        salesAmount.textProperty().bind(this.model.salesAmountProperty());
+        salesCount.textProperty().bind(this.model.salesCountProperty().asString());
     }
 
     @Override
@@ -60,4 +69,3 @@ public class DashboardView implements View {
         }
     }
 }
-
