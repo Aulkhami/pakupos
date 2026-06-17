@@ -2,7 +2,7 @@ package com.aulkhami.pakupos.modules.auth.interactors;
 import com.aulkhami.pakupos.modules.auth.models.LoginModel;
 
 import com.aulkhami.pakupos.app.App;
-import com.aulkhami.pakupos.app.interactors.FormInteractor;
+import com.aulkhami.pakupos.interactors.FormInteractor;
 import com.aulkhami.pakupos.app.utils.AlertHelper;
 import com.aulkhami.pakupos.modules.auth.dtos.AuthRequestDTO;
 import com.aulkhami.pakupos.modules.auth.services.AuthService;
