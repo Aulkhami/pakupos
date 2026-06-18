@@ -5,7 +5,8 @@ import com.aulkhami.pakupos.app.utils.AlertHelper;
 import com.aulkhami.pakupos.interactors.MenuBarInteractor;
 import com.aulkhami.pakupos.modules.auth.services.AuthService;
 import com.aulkhami.pakupos.modules.dashboard.models.DashboardModel;
-import com.aulkhami.pakupos.modules.pos.entities.Order;
+import com.aulkhami.pakupos.modules.dashboard.services.DashboardService;
+import com.aulkhami.pakupos.modules.pos.dtos.OrderResponseDTO;
 import com.aulkhami.pakupos.modules.pos.repositories.OrderRepository;
 import java.io.IOException;
 import java.util.List;
@@ -14,24 +15,23 @@ import java.util.stream.Collectors;
 public class DashboardInteractor extends MenuBarInteractor {
 
     private final DashboardModel model;
+    private final DashboardService dashboardService;
     private final AuthService authService;
-    private final OrderRepository orderRepository;
 
     public DashboardInteractor(DashboardModel model) {
         this.model = model;
+        this.dashboardService = new DashboardService();
         this.authService = new AuthService();
-        this.orderRepository = new OrderRepository();
     }
 
     public void loadDashboardData() {
         try {
-            java.math.BigDecimal todaySales = orderRepository.getTotalSalesToday();
+            java.math.BigDecimal todaySales = dashboardService.getTotalSalesToday();
             model.setSalesAmount(todaySales != null ? todaySales.longValue() : 0L);
-            model.setSalesCount(orderRepository.getOrderCountToday());
+            model.setSalesCount(dashboardService.getOrderCountToday());
 
-            List<Order> orders = orderRepository.findAll();
-            List<Order> recent = orders.stream().limit(5).collect(Collectors.toList());
-            model.getRecentTransactions().setAll(recent);
+            List<OrderResponseDTO> orders = dashboardService.getRecentTransactions(5);
+            model.getRecentTransactions().setAll(orders);
         } catch (Exception e) {
             e.printStackTrace();
         }

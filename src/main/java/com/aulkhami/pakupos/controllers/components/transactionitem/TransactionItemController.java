@@ -1,7 +1,7 @@
 package com.aulkhami.pakupos.controllers.components.transactionitem;
 
 import com.aulkhami.pakupos.controllers.Controller;
-import com.aulkhami.pakupos.modules.pos.entities.Order;
+import com.aulkhami.pakupos.modules.pos.dtos.OrderResponseDTO;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -21,10 +21,10 @@ public class TransactionItemController implements Controller {
     @FXML
     private Label amountLabel;
 
-    private final Order order;
+    private final OrderResponseDTO order;
     private Region view;
 
-    public TransactionItemController(Order order) {
+    public TransactionItemController(OrderResponseDTO order) {
         this.order = order;
     }
 
@@ -41,8 +41,8 @@ public class TransactionItemController implements Controller {
             String code = order.getOrderCode() != null ? order.getOrderCode() : "";
             customerNameLabel.setText(name + (code.isEmpty() ? "" : " - " + code));
 
-            String payment = order.getPaymentMethod() != null ? order.getPaymentMethod().toUpperCase() : "CASH";
-            detailsLabel.setText("Metode: " + payment + " • Status: " + (order.getStatus() != null ? order.getStatus().name() : "PENDING"));
+            // String payment = order.() != null ? order.getPaymentMethod().toUpperCase() : "CASH";
+            detailsLabel.setText("Status: " + (order.getStatus() != null ? order.getStatus() : "PENDING"));
 
             NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
             amountLabel.setText(currencyFormat.format(order.getTotalAmount() != null ? order.getTotalAmount() : java.math.BigDecimal.ZERO).replace("Rp", "Rp "));

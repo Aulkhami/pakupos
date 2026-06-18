@@ -2,12 +2,11 @@ package com.aulkhami.pakupos.modules.dashboard.view;
 
 import com.aulkhami.pakupos.app.App;
 import com.aulkhami.pakupos.interactors.Interactor;
-import com.aulkhami.pakupos.app.utils.AlertHelper;
 import com.aulkhami.pakupos.models.Model;
 import com.aulkhami.pakupos.modules.dashboard.models.DashboardModel;
 import com.aulkhami.pakupos.modules.dashboard.interactors.DashboardInteractor;
 import com.aulkhami.pakupos.controllers.components.transactionitem.TransactionItemController;
-import com.aulkhami.pakupos.modules.pos.entities.Order;
+import com.aulkhami.pakupos.modules.pos.dtos.OrderResponseDTO;
 import com.aulkhami.pakupos.views.View;
 import java.io.IOException;
 import javafx.collections.ListChangeListener;
@@ -34,7 +33,7 @@ public class DashboardView implements View {
         salesAmount.textProperty().bind(this.model.salesAmountProperty());
         salesCount.textProperty().bind(this.model.salesCountProperty().asString());
 
-        this.model.getRecentTransactions().addListener((ListChangeListener<Order>) change -> {
+        this.model.getRecentTransactions().addListener((ListChangeListener<OrderResponseDTO>) change -> {
             renderRecentTransactions();
         });
 
@@ -92,38 +91,6 @@ public class DashboardView implements View {
         }
     }
 
-    private void renderRecentTransactions() {
-        if (recentTransactionsVBox == null) return;
-        recentTransactionsVBox.getChildren().clear();
-
-        for (com.aulkhami.pakupos.modules.pos.dtos.OrderResponseDTO order : model.getRecentTransactions()) {
-            javafx.scene.layout.HBox item = new javafx.scene.layout.HBox();
-            item.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
-            item.setSpacing(12.0);
-            item.getStyleClass().add("transaction-row-card");
-            item.setPadding(new javafx.geometry.Insets(14, 18, 14, 18));
-
-            javafx.scene.layout.VBox info = new javafx.scene.layout.VBox();
-            info.setSpacing(4.0);
-            javafx.scene.layout.HBox.setHgrow(info, javafx.scene.layout.Priority.ALWAYS);
-
-            String cName = (order.getCustomerName() != null && !order.getCustomerName().isEmpty()) ? order.getCustomerName() : "Tamu Umum";
-            javafx.scene.control.Label titleLabel = new javafx.scene.control.Label(cName + " - Pesanan #" + order.getId());
-            titleLabel.getStyleClass().add("transaction-customer-title");
-
-            javafx.scene.control.Label detailsLabel = new javafx.scene.control.Label("Status: " + order.getStatus());
-            detailsLabel.getStyleClass().add("transaction-details");
-
-            info.getChildren().addAll(titleLabel, detailsLabel);
-
-            javafx.scene.control.Label priceLabel = new javafx.scene.control.Label(com.aulkhami.pakupos.app.utils.CurrencyHelper.formatRupiah(order.getTotalAmount()));
-            priceLabel.getStyleClass().add("transaction-amount");
-
-            item.getChildren().addAll(info, priceLabel);
-            recentTransactionsVBox.getChildren().add(item);
-        }
-    }
-
     @FXML
     private void handleNewSale() {
         interactor.navNewSale();
@@ -155,9 +122,11 @@ public class DashboardView implements View {
     }
 
     private void renderRecentTransactions() {
-        if (recentTransactionsVBox == null) return;
+        if (recentTransactionsVBox == null) {
+            return;
+        }
         recentTransactionsVBox.getChildren().clear();
-        for (Order order : model.getRecentTransactions()) {
+        for (OrderResponseDTO order : model.getRecentTransactions()) {
             try {
                 TransactionItemController itemController = new TransactionItemController(order);
                 recentTransactionsVBox.getChildren().add(itemController.getView());

@@ -1,12 +1,13 @@
 package com.aulkhami.pakupos.modules.category.interactors;
 
-import com.aulkhami.pakupos.app.interactors.Interactor;
 import com.aulkhami.pakupos.app.utils.AlertHelper;
+import com.aulkhami.pakupos.interactors.Interactor;
 import com.aulkhami.pakupos.modules.category.dtos.CategoryDTO;
 import com.aulkhami.pakupos.modules.category.models.CategoryModel;
 import com.aulkhami.pakupos.modules.category.services.CategoryService;
 
 public class CategoryInteractor implements Interactor {
+
     private final CategoryModel model;
     private final CategoryService service = new CategoryService();
 

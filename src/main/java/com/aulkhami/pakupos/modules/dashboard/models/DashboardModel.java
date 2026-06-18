@@ -2,27 +2,30 @@ package com.aulkhami.pakupos.modules.dashboard.models;
 
 import com.aulkhami.pakupos.models.Model;
 import com.aulkhami.pakupos.models.bindings.BigCurrencyBinding;
+import com.aulkhami.pakupos.modules.pos.dtos.OrderResponseDTO;
 import com.aulkhami.pakupos.modules.pos.entities.Order;
+import java.math.BigDecimal;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.LongProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleLongProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class DashboardModel implements Model {
-    private final SimpleObjectProperty<BigDecimal> totalSales = new SimpleObjectProperty<>(BigDecimal.ZERO);
-    private final SimpleIntegerProperty totalOrders = new SimpleIntegerProperty(0);
+
+    private final ObjectProperty<BigDecimal> totalSales = new SimpleObjectProperty<>(BigDecimal.ZERO);
+    private final IntegerProperty totalOrders = new SimpleIntegerProperty(0);
     private final ObservableList<OrderResponseDTO> recentTransactions = FXCollections.observableArrayList();
 
     private LongProperty salesAmount;
     private StringProperty salesAmountStr;
 
     private IntegerProperty salesCount;
-
-    private final ObservableList<Order> recentTransactions = FXCollections.observableArrayList();
 
     public DashboardModel() {
         salesAmount = new SimpleLongProperty(0);
@@ -48,7 +51,7 @@ public class DashboardModel implements Model {
         this.salesCount.set(count);
     }
 
-    public ObservableList<Order> getRecentTransactions() {
+    public ObservableList<OrderResponseDTO> getRecentTransactions() {
         return recentTransactions;
     }
 }

@@ -1,8 +1,8 @@
 package com.aulkhami.pakupos.modules.category.view;
 
 import com.aulkhami.pakupos.app.App;
-import com.aulkhami.pakupos.app.interactors.Interactor;
 import com.aulkhami.pakupos.app.utils.AlertHelper;
+import com.aulkhami.pakupos.interactors.Interactor;
 import com.aulkhami.pakupos.models.Model;
 import com.aulkhami.pakupos.modules.category.dtos.CategoryDTO;
 import com.aulkhami.pakupos.modules.category.interactors.CategoryInteractor;
@@ -23,14 +23,20 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 
 public class CategoryView implements View {
+
     private CategoryModel model;
     private CategoryInteractor interactor;
 
-    @FXML private TextField nameField;
-    @FXML private Label formTitleLabel;
-    @FXML private Button saveButton;
-    @FXML private Button cancelButton;
-    @FXML private VBox listVBox;
+    @FXML
+    private TextField nameField;
+    @FXML
+    private Label formTitleLabel;
+    @FXML
+    private Button saveButton;
+    @FXML
+    private Button cancelButton;
+    @FXML
+    private VBox listVBox;
 
     private Integer editingId = null;
 
@@ -48,7 +54,9 @@ public class CategoryView implements View {
     }
 
     private void renderList() {
-        if (listVBox == null) return;
+        if (listVBox == null) {
+            return;
+        }
         listVBox.getChildren().clear();
         for (CategoryDTO dto : model.getCategories()) {
             listVBox.getChildren().add(createItem(dto));
@@ -87,8 +95,12 @@ public class CategoryView implements View {
     private void startEdit(CategoryDTO dto) {
         editingId = dto.getId();
         nameField.setText(dto.getName());
-        if (formTitleLabel != null) formTitleLabel.setText("Update Kategori");
-        if (saveButton != null) saveButton.setText("UPDATE KATEGORI");
+        if (formTitleLabel != null) {
+            formTitleLabel.setText("Update Kategori");
+        }
+        if (saveButton != null) {
+            saveButton.setText("UPDATE KATEGORI");
+        }
         if (cancelButton != null) {
             cancelButton.setVisible(true);
             cancelButton.setManaged(true);
@@ -99,8 +111,12 @@ public class CategoryView implements View {
     private void handleCancelEdit() {
         editingId = null;
         nameField.clear();
-        if (formTitleLabel != null) formTitleLabel.setText("Tambah Kategori Baru");
-        if (saveButton != null) saveButton.setText("SIMPAN KATEGORI");
+        if (formTitleLabel != null) {
+            formTitleLabel.setText("Tambah Kategori Baru");
+        }
+        if (saveButton != null) {
+            saveButton.setText("SIMPAN KATEGORI");
+        }
         if (cancelButton != null) {
             cancelButton.setVisible(false);
             cancelButton.setManaged(false);

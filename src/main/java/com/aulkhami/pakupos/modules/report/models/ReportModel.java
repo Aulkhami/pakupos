@@ -1,7 +1,7 @@
 package com.aulkhami.pakupos.modules.report.models;
 
 import com.aulkhami.pakupos.models.Model;
-import com.aulkhami.pakupos.modules.pos.entities.Order;
+import com.aulkhami.pakupos.modules.pos.dtos.OrderResponseDTO;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -15,7 +15,7 @@ public class ReportModel implements Model {
 
     private final ObjectProperty<BigDecimal> totalSales = new SimpleObjectProperty<>(BigDecimal.ZERO);
     private final IntegerProperty totalOrders = new SimpleIntegerProperty(0);
-    private final ObservableList<Order> transactions = FXCollections.observableArrayList();
+    private final ObservableList<OrderResponseDTO> transactions = FXCollections.observableArrayList();
 
     private final ObjectProperty<LocalDate> filterFromDate = new SimpleObjectProperty<>(LocalDate.now());
     private final ObjectProperty<LocalDate> filterToDate = new SimpleObjectProperty<>(LocalDate.now());
@@ -44,7 +44,7 @@ public class ReportModel implements Model {
         this.totalOrders.set(totalOrders);
     }
 
-    public ObservableList<Order> transactionsProperty() {
+    public ObservableList<OrderResponseDTO> transactionsProperty() {
         return transactions;
     }
 
