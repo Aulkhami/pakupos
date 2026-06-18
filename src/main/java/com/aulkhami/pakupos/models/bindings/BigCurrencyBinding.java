@@ -4,6 +4,7 @@
  */
 package com.aulkhami.pakupos.models.bindings;
 
+import java.util.Locale;
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.LongProperty;
 
@@ -39,6 +40,6 @@ public class BigCurrencyBinding extends StringBinding {
             suffix = "Rb";
         }
 
-        return String.format("Rp %.2f" + suffix, amount / divBy);
+        return String.format(new Locale("id", "ID"), "Rp %.2f" + suffix, amount / divBy);
     }
 }

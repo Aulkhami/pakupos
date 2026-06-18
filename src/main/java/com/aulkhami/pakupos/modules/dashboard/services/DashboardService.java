@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class DashboardService {
+
     private final OrderRepository orderRepository;
 
     public DashboardService() {
@@ -23,7 +24,7 @@ public class DashboardService {
     }
 
     public List<OrderResponseDTO> getRecentTransactions(int limit) {
-        List<Order> allOrders = orderRepository.findAll();
+        List<Order> allOrders = orderRepository.findOrdersByToday();
         return allOrders.stream()
                 .limit(limit)
                 .map(OrderResponseDTO::new)

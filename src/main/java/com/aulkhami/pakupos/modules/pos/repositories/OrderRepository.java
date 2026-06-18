@@ -6,6 +6,7 @@ import com.aulkhami.pakupos.app.enums.OrderStatus;
 
 import java.math.BigDecimal;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,21 +45,8 @@ public class OrderRepository {
         List<Order> orders = new ArrayList<>();
         String sql = "SELECT * FROM orders ORDER BY created_at DESC";
         try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
-
             while (rs.next()) {
-                Order order = new Order();
-                order.setId(rs.getLong("id"));
-                order.setUserId(rs.getLong("customer_id"));
-                order.setCustomerName(rs.getString("customer_name"));
-                order.setTotalAmount(rs.getBigDecimal("total_amount"));
-                order.setPaymentMethod(rs.getString("payment_method"));
-                try {
-                    order.setStatus(OrderStatus.valueOf(rs.getString("status").toUpperCase()));
-                } catch (Exception e) {
-                    order.setStatus(OrderStatus.COMPLETED);
-                }
-                order.setCreatedAt(rs.getTimestamp("created_at"));
-                orders.add(order);
+                orders.add(mapResultSetToOrder(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -66,12 +54,55 @@ public class OrderRepository {
         return orders;
     }
 
-    public BigDecimal getTotalSalesToday() {
-        String sql = "SELECT SUM(total_amount) FROM orders WHERE status = 'completed'";
-        try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) {
-                BigDecimal total = rs.getBigDecimal(1);
-                return total != null ? total : BigDecimal.ZERO;
+    private Order mapResultSetToOrder(ResultSet rs) throws SQLException {
+        Order order = new Order();
+        order.setId(rs.getLong("id"));
+        order.setUserId(rs.getLong("customer_id"));
+        order.setCustomerName(rs.getString("customer_name"));
+        order.setTotalAmount(rs.getBigDecimal("total_amount"));
+        order.setPaymentMethod(rs.getString("payment_method"));
+        try {
+            order.setStatus(OrderStatus.valueOf(rs.getString("status").toUpperCase()));
+        } catch (Exception e) {
+            order.setStatus(OrderStatus.COMPLETED);
+        }
+        order.setCreatedAt(rs.getTimestamp("created_at"));
+        return order;
+    }
+
+    public List<Order> findOrdersByDateRange(Timestamp start, Timestamp end) {
+        List<Order> orders = new ArrayList<>();
+        String sql = "SELECT * FROM orders WHERE created_at >= ? AND created_at <= ? ORDER BY created_at DESC";
+        try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setTimestamp(1, start);
+            ps.setTimestamp(2, end);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    orders.add(mapResultSetToOrder(rs));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return orders;
+    }
+
+    public List<Order> findOrdersByToday() {
+        Timestamp start = Timestamp.valueOf(LocalDate.now().atStartOfDay());
+        Timestamp end = Timestamp.valueOf(LocalDate.now().atTime(23, 59));
+        return findOrdersByDateRange(start, end);
+    }
+
+    public BigDecimal getTotalSalesInDateRange(Timestamp start, Timestamp end) {
+        String sql = "SELECT SUM(total_amount) FROM orders WHERE status = 'completed' AND created_at >= ? AND created_at <= ?";
+        try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setTimestamp(1, start);
+            ps.setTimestamp(2, end);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    BigDecimal total = rs.getBigDecimal(1);
+                    return total != null ? total : BigDecimal.ZERO;
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -79,15 +110,31 @@ public class OrderRepository {
         return BigDecimal.ZERO;
     }
 
-    public int getOrderCountToday() {
-        String sql = "SELECT COUNT(*) FROM orders";
-        try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) {
-                return rs.getInt(1);
+    public BigDecimal getTotalSalesToday() {
+        Timestamp start = Timestamp.valueOf(LocalDate.now().atStartOfDay());
+        Timestamp end = Timestamp.valueOf(LocalDate.now().atTime(23, 59));
+        return getTotalSalesInDateRange(start, end);
+    }
+
+    public int getOrderCountInDateRange(Timestamp start, Timestamp end) {
+        String sql = "SELECT COUNT(*) FROM orders WHERE created_at >= ? AND created_at <= ?";
+        try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setTimestamp(1, start);
+            ps.setTimestamp(2, end);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public int getOrderCountToday() {
+        Timestamp start = Timestamp.valueOf(LocalDate.now().atStartOfDay());
+        Timestamp end = Timestamp.valueOf(LocalDate.now().atTime(23, 59));
+        return getOrderCountInDateRange(start, end);
     }
 }
