@@ -2,7 +2,7 @@ package com.aulkhami.pakupos.modules.settings.view;
 
 import com.aulkhami.pakupos.app.App;
 import com.aulkhami.pakupos.app.enums.UserRole;
-import com.aulkhami.pakupos.app.interactors.Interactor;
+import com.aulkhami.pakupos.interactors.Interactor;
 import com.aulkhami.pakupos.app.utils.AlertHelper;
 import com.aulkhami.pakupos.models.Model;
 import com.aulkhami.pakupos.modules.settings.models.SettingsModel;
@@ -104,29 +104,17 @@ public class SettingsView implements View {
 
     @FXML
     private void handleBack() {
-        try {
-            App.navigate("dashboard");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        interactor.navDashboard();
     }
 
     @FXML
     private void handleNewSale() {
-        try {
-            App.navigate("pos");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        interactor.navNewSale();
     }
 
     @FXML
     private void handleInventory() {
-        try {
-            App.navigate("inventory");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        interactor.navInventory();
     }
 }
 

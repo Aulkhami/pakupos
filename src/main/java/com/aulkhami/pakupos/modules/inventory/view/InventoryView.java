@@ -1,7 +1,7 @@
 package com.aulkhami.pakupos.modules.inventory.view;
 
 import com.aulkhami.pakupos.app.App;
-import com.aulkhami.pakupos.app.interactors.Interactor;
+import com.aulkhami.pakupos.interactors.Interactor;
 import com.aulkhami.pakupos.app.utils.AlertHelper;
 import com.aulkhami.pakupos.models.Model;
 import com.aulkhami.pakupos.modules.inventory.dtos.ProductRequestDTO;
@@ -207,29 +207,17 @@ public class InventoryView implements View {
 
     @FXML
     private void handleNewSale() {
-        try {
-            App.navigate("pos");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        interactor.navNewSale();
     }
 
     @FXML
     private void handleSettings() {
-        try {
-            App.navigate("settings");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        interactor.navSettings();
     }
 
     @FXML
     private void handleBack() {
-        try {
-            App.navigate("dashboard");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        interactor.navDashboard();
     }
 
     private void clearFields() {
