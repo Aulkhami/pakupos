@@ -6,7 +6,7 @@ import com.aulkhami.pakupos.app.utils.AlertHelper;
 import com.aulkhami.pakupos.models.Model;
 import com.aulkhami.pakupos.modules.dashboard.models.DashboardModel;
 import com.aulkhami.pakupos.modules.dashboard.interactors.DashboardInteractor;
-import com.aulkhami.pakupos.modules.dashboard.controllers.TransactionItemController;
+import com.aulkhami.pakupos.controllers.components.transactionitem.TransactionItemController;
 import com.aulkhami.pakupos.modules.pos.entities.Order;
 import com.aulkhami.pakupos.views.View;
 import java.io.IOException;
