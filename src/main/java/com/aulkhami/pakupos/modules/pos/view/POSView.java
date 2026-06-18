@@ -17,6 +17,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -30,6 +31,16 @@ public class POSView implements View {
 
     @FXML
     private TabPane posTabPane;
+    @FXML
+    private Tab step1Tab;
+    @FXML
+    private Tab step2Tab;
+    @FXML
+    private Tab step3Tab;
+    @FXML
+    private Tab step4Tab;
+    @FXML
+    private Tab step5Tab;
     @FXML
     private TextField customerNameField;
     @FXML
@@ -69,10 +80,37 @@ public class POSView implements View {
             customerNameField.textProperty().bindBidirectional(this.model.customerNameProperty());
         }
 
+        // Initialize tab states and visibility (hide step 4 and 5 initially)
+        if (posTabPane != null) {
+            posTabPane.getTabs().remove(step4Tab);
+            posTabPane.getTabs().remove(step5Tab);
+        }
+        if (step2Tab != null) step2Tab.setDisable(true);
+        if (step3Tab != null) step3Tab.setDisable(true);
+        if (step4Tab != null) step4Tab.setDisable(true);
+        if (step5Tab != null) step5Tab.setDisable(true);
+        if (step2Tab != null && !this.model.getCart().isEmpty()) {
+            step2Tab.setDisable(false);
+        }
+
         this.model.getCart().addListener((ListChangeListener<CartItemDTO>) change -> {
             updateCartSummary();
             renderProducts();
             updateReceipt();
+            
+            if (this.model.getCart().isEmpty()) {
+                if (step2Tab != null) step2Tab.setDisable(true);
+                if (step3Tab != null) step3Tab.setDisable(true);
+                if (step4Tab != null) step4Tab.setDisable(true);
+                if (step5Tab != null) step5Tab.setDisable(true);
+                if (posTabPane != null) {
+                    posTabPane.getTabs().remove(step4Tab);
+                    posTabPane.getTabs().remove(step5Tab);
+                    posTabPane.getSelectionModel().select(0);
+                }
+            } else {
+                if (step2Tab != null) step2Tab.setDisable(false);
+            }
         });
 
         this.model.getCatalog().addListener((ListChangeListener<ProductResponseDTO>) change -> renderProducts());
@@ -241,29 +279,61 @@ public class POSView implements View {
         if (model.getCart().isEmpty()) {
             return;
         }
-        posTabPane.getSelectionModel().select(1);
+        if (step2Tab != null) step2Tab.setDisable(false);
+        if (posTabPane != null) posTabPane.getSelectionModel().select(step2Tab);
     }
 
     @FXML
     private void goToStep3() {
-        posTabPane.getSelectionModel().select(2);
+        if (step3Tab != null) step3Tab.setDisable(false);
+        if (posTabPane != null) posTabPane.getSelectionModel().select(step3Tab);
     }
 
     @FXML
     private void selectCashPayment() {
-        posTabPane.getSelectionModel().select(3);
+        if (posTabPane != null) {
+            if (step4Tab != null) {
+                if (!posTabPane.getTabs().contains(step4Tab)) {
+                    posTabPane.getTabs().add(step4Tab);
+                }
+                step4Tab.setDisable(false);
+            }
+            if (step5Tab != null) {
+                posTabPane.getTabs().remove(step5Tab);
+            }
+            if (step4Tab != null) {
+                posTabPane.getSelectionModel().select(step4Tab);
+            }
+        }
         cashInputField.setText("");
         changeLabel.setText("Rp 0");
     }
 
     @FXML
     private void selectQrisPayment() {
-        posTabPane.getSelectionModel().select(4);
+        if (posTabPane != null) {
+            if (step5Tab != null) {
+                if (!posTabPane.getTabs().contains(step5Tab)) {
+                    posTabPane.getTabs().add(step5Tab);
+                }
+                step5Tab.setDisable(false);
+            }
+            if (step4Tab != null) {
+                posTabPane.getTabs().remove(step4Tab);
+            }
+            if (step5Tab != null) {
+                posTabPane.getSelectionModel().select(step5Tab);
+            }
+        }
     }
 
     @FXML
     private void goBackToPayment() {
-        posTabPane.getSelectionModel().select(2);
+        if (posTabPane != null) {
+            if (step4Tab != null) posTabPane.getTabs().remove(step4Tab);
+            if (step5Tab != null) posTabPane.getTabs().remove(step5Tab);
+            posTabPane.getSelectionModel().select(step3Tab);
+        }
     }
 
     @FXML
