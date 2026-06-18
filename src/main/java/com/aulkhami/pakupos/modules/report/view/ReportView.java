@@ -1,12 +1,11 @@
 package com.aulkhami.pakupos.modules.report.view;
 
-import com.aulkhami.pakupos.app.App;
 import com.aulkhami.pakupos.interactors.Interactor;
 import com.aulkhami.pakupos.models.Model;
-import com.aulkhami.pakupos.modules.pos.entities.Order;
 import com.aulkhami.pakupos.modules.report.models.ReportModel;
 import com.aulkhami.pakupos.modules.report.interactors.ReportInteractor;
 import com.aulkhami.pakupos.controllers.components.transactionitem.TransactionItemController;
+import com.aulkhami.pakupos.modules.pos.dtos.OrderResponseDTO;
 import com.aulkhami.pakupos.views.View;
 import java.io.IOException;
 import java.text.NumberFormat;
@@ -57,7 +56,7 @@ public class ReportView implements View {
         this.model.totalOrdersProperty().addListener((obs, oldVal, newVal) -> {
             totalOrdersLabel.setText(String.valueOf(newVal));
         });
-        this.model.transactionsProperty().addListener((ListChangeListener<Order>) change -> {
+        this.model.transactionsProperty().addListener((ListChangeListener<OrderResponseDTO>) change -> {
             renderTransactions();
         });
 
@@ -89,7 +88,7 @@ public class ReportView implements View {
 
     private void renderTransactions() {
         transactionListVBox.getChildren().clear();
-        for (Order order : model.transactionsProperty()) {
+        for (OrderResponseDTO order : model.transactionsProperty()) {
             try {
                 TransactionItemController itemController = new TransactionItemController(order);
                 transactionListVBox.getChildren().add(itemController.getView());
