@@ -8,18 +8,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 
 public class ReportModel implements Model {
 
-    private final SimpleObjectProperty<BigDecimal> totalSales = new SimpleObjectProperty<>(BigDecimal.ZERO);
-    private final SimpleIntegerProperty totalOrders = new SimpleIntegerProperty(0);
+    private final ObjectProperty<BigDecimal> totalSales = new SimpleObjectProperty<>(BigDecimal.ZERO);
+    private final IntegerProperty totalOrders = new SimpleIntegerProperty(0);
     private final ObservableList<Order> transactions = FXCollections.observableArrayList();
 
     private final ObjectProperty<LocalDate> filterFromDate = new SimpleObjectProperty<>(LocalDate.now());
     private final ObjectProperty<LocalDate> filterToDate = new SimpleObjectProperty<>(LocalDate.now());
 
-    public SimpleObjectProperty<BigDecimal> totalSalesProperty() {
+    public ObjectProperty<BigDecimal> totalSalesProperty() {
         return totalSales;
     }
 
@@ -31,7 +32,7 @@ public class ReportModel implements Model {
         this.totalSales.set(totalSales);
     }
 
-    public SimpleIntegerProperty totalOrdersProperty() {
+    public IntegerProperty totalOrdersProperty() {
         return totalOrders;
     }
 
