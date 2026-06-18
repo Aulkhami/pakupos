@@ -68,7 +68,7 @@ public class UserService implements IUserService {
 
     @Override
     public void updateUser(User user) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        UserRepository.update(user);
     }
 
     @Override
