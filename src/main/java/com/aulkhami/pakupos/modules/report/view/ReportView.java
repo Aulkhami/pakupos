@@ -9,7 +9,9 @@ import com.aulkhami.pakupos.modules.pos.dtos.OrderResponseDTO;
 import com.aulkhami.pakupos.views.View;
 import java.io.IOException;
 import java.text.NumberFormat;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Locale;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ListChangeListener;
@@ -38,6 +40,9 @@ public class ReportView implements View {
 
     @FXML
     private Label endDateLabel;
+
+    @FXML
+    private Label summaryLabel;
 
     @FXML
     private MenuButton filterMenuButton;
@@ -71,6 +76,21 @@ public class ReportView implements View {
         endDateLabel.textProperty().bind(Bindings.createStringBinding(
                 () -> dateFormat.format(this.model.filterToDateProperty().get()
                 ), this.model.filterToDateProperty()));
+
+        summaryLabel.textProperty().bind(Bindings.createStringBinding(() -> {
+            LocalDate fromDate = this.model.filterFromDateProperty().get();
+            long daysBetween = ChronoUnit.DAYS.between(fromDate, LocalDate.now());
+
+            if (daysBetween > 31) {
+                return "Ringkasan Tahun Ini";
+            } else if (daysBetween > 7) {
+                return "Ringkasan Bulan Ini";
+            } else if (daysBetween >= 1) {
+                return "Ringkasan 7 Hari Terakhir";
+            } else {
+                return "Ringkasan Hari Ini";
+            }
+        }, this.model.filterFromDateProperty()));
 
         renderTransactions();
     }

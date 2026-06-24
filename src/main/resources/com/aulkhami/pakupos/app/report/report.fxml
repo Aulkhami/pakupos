@@ -73,7 +73,7 @@
                         </VBox>
                     </children>
                 </HBox>
-                <Label styleClass="mobile-subtitle" text="Ringkasan Hari Ini" />
+                <Label fx:id="summaryLabel" styleClass="mobile-subtitle" text="Ringkasan Hari Ini" />
                 <HBox fillHeight="true" spacing="10.0">
                     <VBox spacing="5.0" styleClass="mobile-stats-card" HBox.hgrow="ALWAYS">
                         <padding>
